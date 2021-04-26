@@ -1,10 +1,19 @@
 import React from 'react';
+import { Row } from 'react-bootstrap';
 
-const ProductsDeck = () => {
+import ProductCard from './ProductCard';
+
+const ProductsDeck = ({ products }) => {
+
   return (
-    <div>
-      
-    </div>
+    <Row>
+      <ProductCard product={null} />
+      <ProductCard product={null} />
+      <ProductCard product={null} />
+      <ProductCard product={null} />
+      <ProductCard product={null} />
+      <ProductCard product={null} />
+    </Row>
   );
 }
 

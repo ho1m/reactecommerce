@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProductPage = () => {
   return (
-    <div>
+    <div className="view">
       Product page
     </div>
   );

@@ -1,8 +1,13 @@
 import React from 'react';
 
 const Login = () => {
+  // const login = () => {
+  //     try {history.push(history.location.state.from.pathname)}
+  //     catch {history.push('/')}
+  // }
+
   return (
-    <div>
+    <div className="view">
       Login
     </div>
   );

@@ -14,7 +14,7 @@ const NotFound = () => {
   }, [history]);
 
   return (
-    <div>
+    <div className="view">
       Not found page
     </div>
   );

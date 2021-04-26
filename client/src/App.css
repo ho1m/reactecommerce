@@ -1,3 +1,25 @@
 .view {
-  min-height: calc(55px - 100vh);
+  padding: 2rem 0;
+  min-height: calc(100vh - 55px);
+}
+
+.arrow {
+  padding: 0 30px;
+}
+
+.img__container {
+  /* overflow: hidden;
+  height: 300px; */
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.img__container > img {
+  /* height: 100%;
+  width: auto;
+  object-position: center;
+  object-fit: contain; */
+  width: 100%;
+  height: auto;
 }
