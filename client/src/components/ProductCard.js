@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
     <Col xs={12} sm={6} md={4} className="mb-4">
       <Link to={`/productpage/view/${'123'}`}>
       <CardContainer className="card">
-        <div class="img__container mb-3">
+        <div className="img__container mb-3">
           <img src="http://img.bbystatic.com/BestBuy_US/images/products/1018/1018934_sa.jpg" alt="" />
         </div>
         <Card.Body>
@@ -39,7 +39,7 @@ const CardContainer = styled.div`
   }
 
   .img__container {
-    width: 100%;
+    width: 100% !important;
     height: 300px;
   }
 `;

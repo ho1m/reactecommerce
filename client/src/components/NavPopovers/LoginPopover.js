@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { Popover, Overlay, Button } from 'react-bootstrap';
+import { Popover, Overlay, Button, Form } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const LoginPopover = () => {
   const [show, setShow] = useState(false);
@@ -28,9 +29,32 @@ const LoginPopover = () => {
         containerPadding={20}
       >
         <Popover id="popover-contained">
-          <Popover.Title as="h3">Popover bottom</Popover.Title>
+          <Popover.Title as="h3">Login to your account here</Popover.Title>
           <Popover.Content>
-            <strong>Holy guacamole!</strong> Check this info.
+
+            <Form onSubmit={(e) => e.preventDefault()}>
+              <Form.Label className="sr-only" htmlFor="emailLoginInput">Email</Form.Label>
+              <Form.Control
+                id="emailLoginInput"
+                className="mb-2"
+                required
+                type="email"
+                placeholder="Email"
+              ></Form.Control>
+
+              <Form.Label className="sr-only" htmlFor="passwLoginInput">Password</Form.Label>
+              <Form.Control
+                id="passwLoginInput"
+                className="mb-2"
+                required
+                type="password"
+                placeholder="Password"
+              ></Form.Control>
+
+              <Button variant="primary" type="submit" className="my-2">Login</Button>
+            </Form>
+            <Link to="/signup">or Sign Up here.</Link>
+
           </Popover.Content>
         </Popover>
       </Overlay>

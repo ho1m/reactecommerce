@@ -7,7 +7,7 @@ import CartPopover from './NavPopovers/CartPopover';
 import { Nav } from 'react-bootstrap';
 
 const Navbar = () => {
-  const user = false;
+  const user = true;
 
   return (
     <div>
@@ -19,7 +19,7 @@ const Navbar = () => {
           </Link>
 
 
-          <Nav className="mr-auto">
+          <Nav className="mr-auto d-flex align-items-center">
             {user ? <UserPopover /> : <LoginPopover />}
             <CartPopover />
           </Nav>

@@ -6,13 +6,13 @@ const NotFound = () => {
 
   const history = useHistory();
 
-  // useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     history.push('/');
-  //   }, 2000)
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      history.push('/');
+    }, 2000)
 
-  //   return () => clearTimeout(timeout)
-  // }, [history]);
+    return () => clearTimeout(timeout)
+  }, [history]);
 
   return (
     <NotFoundContainer className="view d-flex align-items-center justify-content-center flex-column">

@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
-import { Popover, Overlay, Button, Badge } from 'react-bootstrap';
+import { Popover, Overlay, Button, Badge, Card, ListGroup } from 'react-bootstrap';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import styled from 'styled-components';
+import { Avatar } from '@material-ui/core';
+import { ArrowDownward, ArrowUpward, DeleteOutlineOutlined } from '@material-ui/icons';
 
 const CartPopover = () => {
   const [show, setShow] = useState(false);
@@ -20,7 +22,7 @@ const CartPopover = () => {
 
   return (
     <CartPopoverContainer ref={ref} onMouseLeave={() => setShow(false)} className="ml-4">
-      <Button onClick={handleClick} onMouseEnter={handleHover} variant="transparent">
+      <Button onClick={handleClick} onMouseEnter={handleHover} variant="transparent pr-0">
         <ShoppingCartOutlinedIcon />
         <Badge variant="secondary">0</Badge>
       </Button>
@@ -32,10 +34,47 @@ const CartPopover = () => {
         container={ref.current}
         containerPadding={20}
       >
-        <Popover id="popover-contained">
-          <Popover.Title as="h3">Popover bottom</Popover.Title>
+        <Popover id="popover-contained" className="cart__pop">
+          <Popover.Title as="h3">Cart</Popover.Title>
           <Popover.Content>
-            <strong>Holy guacamole!</strong> Check this info.
+            <ListGroup> {/*  v-if="cart"  */}
+
+            <ListGroup.Item className="d-flex align-items-center p-2" >
+              <Avatar size="2.5em" />
+              <div className="w-100 ml-2 d-flex align-items-center justify-content-between">
+                <div className="flex-grow-2">
+                  <h6 className="mb-0">Lorem, ipsum. <span>x 123</span></h6>
+                  <p className="mb-0">Price: $12.99</p>
+                </div>
+                <div className="ml-2 d-flex align-items-center">
+                  <div className="d-flex flex-column align-items-stretch justify-content-center mr-1">
+                    {/* <!-- add to product quantity --> */}
+                    <Button variant="transparent p-0" className="border border-1" > {/* @click="() => updateProductInCart({ type: 'add', productId: product.product._id })" */}
+                      <ArrowUpward />
+                    </Button>
+                    {/* <!-- sub to product quantity --- if quantity is 1 then resolve to delete--> */}
+                    <Button variant="transparent p-0" className="border border-1" > {/* @click="() => updateProductInCart({ type: 'sub', productId: product.product._id })" */}
+                      <ArrowDownward />
+                    </Button>
+                  </div>
+                  {/* <!-- delete product from cart products deleteProductFromCart -->  */}
+                  <Button id="" variant="danger" > {/* @click="() => deleteProductFromCart({ productId: product.product._id })" */}
+                    <DeleteOutlineOutlined />
+                  </Button>
+                </div>
+              </div>
+            </ListGroup.Item>
+
+            </ListGroup>
+
+            <Card
+            header="`TOTAL PRICE: $12.99`"
+            header-tag="header"
+            className="mt-3"
+            body-class="p-1"
+            >
+            <Button variant="primary w-100" onClick={() => console.log("checkout")} >CHECKOUT</Button>
+            </Card>
           </Popover.Content>
         </Popover>
       </Overlay>
@@ -46,5 +85,7 @@ const CartPopover = () => {
 export default CartPopover;
 
 const CartPopoverContainer = styled.div`
-
+  .cart__pop {
+    min-width: 30% !important;
+  }
 `;
