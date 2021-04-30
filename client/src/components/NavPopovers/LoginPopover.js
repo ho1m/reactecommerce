@@ -44,9 +44,11 @@ const LoginPopover = () => {
           <Popover.Title as="h3">Login to your account here</Popover.Title>
           <Popover.Content>
 
-            <Form onSubmit={(e) => e.preventDefault()}>
+            <Form onSubmit={handleSubmit}>
               <Form.Label className="sr-only" htmlFor="emailLoginInput">Email</Form.Label>
               <Form.Control
+                value={email}
+                onChange={({target}) => setEmail(target.value)}
                 id="emailLoginInput"
                 className="mb-2"
                 required
@@ -56,6 +58,8 @@ const LoginPopover = () => {
 
               <Form.Label className="sr-only" htmlFor="passwLoginInput">Password</Form.Label>
               <Form.Control
+                value={password}
+                onChange={({target}) => setPassword(target.value)}
                 id="passwLoginInput"
                 className="mb-2"
                 required

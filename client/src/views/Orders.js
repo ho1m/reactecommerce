@@ -3,9 +3,10 @@ import React from 'react';
 import { Accordion, Button, Card, Container, ListGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/appSlice';
-import { selectNameTest } from '../features/cart/cartSlice';
+import { selectNameTest, selectOrders } from '../features/cart/cartSlice';
 
 const Orders = () => {
+  const orders = useSelector(selectOrders);
   const totalPrice = (productsList) => {
     return productsList.map(({ product, quantity }) => product.price * quantity).reduce((a, b) => a + b, 0)
   }
@@ -17,38 +18,43 @@ const Orders = () => {
       
         <Accordion>
 
-          <Card className="mb-1" v-for="order in list">
-            <Card.Header header-tag="header" className="p-1" role="tab">
-              <Accordion.Toggle as={Button} variant="link" eventKey="2" className="w-100 bg-dark text-light">
-                ORDER #orderid • {'dd,mm,yyyy' | ("dddd, MMMM Do YYYY") } • TOTAL PRICE: ${'$12.99'}
-              </Accordion.Toggle>
-            </Card.Header>
+          {orders.length ? orders.map((order, i) => (
+            <Card className="mb-1" key={order._id}>
 
-            <Accordion.Collapse eventKey="2">
-              <Card.Body>
-                <ListGroup>
+              <Card.Header header-tag="header" className="p-1" role="tab">
+                <Accordion.Toggle as={Button} variant="link" eventKey={`${i}`} className="w-100 bg-dark text-light">
+                  ORDER #{order._id} • {new Date(order.updatedAt).toDateString()} • TOTAL PRICE: ${totalPrice(order.products)}
+                </Accordion.Toggle>
+              </Card.Header>
 
-                  <ListGroup.Item className="d-flex">
-                    <Avatar />
-                    <div className="flex-fill ml-3">
-                      <div className="d-flex w-100 justify-content-between">
-                        <h5 className="mb-1">Lorem, ipsum.</h5>
-                        <small>x 123</small>
-                      </div>
+              <Accordion.Collapse eventKey={`${i}`}>
+                <Card.Body>
+                  <ListGroup>
 
-                      <p className="mb-1">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus quod autem quis obcaecati. Perferendis, dolorum!
-                      </p>
+                    {order.products.map(({ product, quantity}) => (
+                      <ListGroup.Item className="d-flex" key={product._id}>
+                        <Avatar src={product.image} />
+                        <div className="flex-fill ml-3">
+                          <div className="d-flex w-100 justify-content-between">
+                            <h5 className="mb-1">{product.name}</h5>
+                            <small>x {quantity}</small>
+                          </div>
 
-                      <small>${12.99}</small>
-                    </div>
-                  </ListGroup.Item>
+                          <p className="mb-1">
+                            {product.shortDesc}
+                          </p>
 
-                </ListGroup>
-              </Card.Body>
-            </Accordion.Collapse>
+                          <small>${product.price}</small>
+                        </div>
+                      </ListGroup.Item>
+                    ))}
+                    
+                  </ListGroup>
+                </Card.Body>
+              </Accordion.Collapse>
 
-          </Card>
+            </Card>
+          )) : ''}
 
         </Accordion>
       

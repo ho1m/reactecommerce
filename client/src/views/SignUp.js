@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { register } from '../features/appSlice';
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(register({
+      registerData: { email, password, name },
+      historyMethod: history.push('/') 
+    }))
+  }
+
   return (
     <div className="view d-flex align-items-center justify-content-center flex-column">
       <h3>Sign Up</h3>
-      <Form className="w-50 mt-3" autocomplete="off" onSubmit={(e) => e.preventDefault()}>
+      <Form className="w-50 mt-3" autoComplete="off" onSubmit={handleSubmit}>
 
-        <Form.Label className="" for="nameSignupInput">Name:</Form.Label>
+        <Form.Label className="" htmlFor="nameSignupInput">Name:</Form.Label>
         <Form.Control
           v-model="nameInput"
           id="nameSignupInput"
@@ -16,10 +32,10 @@ const SignUp = () => {
           required
           type="text"
           placeholder="Jane Doe"
-          autocomplete="off"
+          autoComplete="off"
         ></Form.Control>
 
-        <Form.Label className="" for="emailSignupInput">Email:</Form.Label>
+        <Form.Label className="" htmlFor="emailSignupInput">Email:</Form.Label>
         <Form.Control
           v-model="emailInput"
           id="emailSignupInput"
@@ -27,10 +43,10 @@ const SignUp = () => {
           required
           type="email"
           placeholder="example@gmail.com"
-          autocomplete="off"
+          autoComplete="off"
         ></Form.Control>
 
-        <Form.Label className="" for="passwSignupInput">Password:</Form.Label>
+        <Form.Label className="" htmlFor="passwSignupInput">Password:</Form.Label>
         <Form.Control
           v-model="passwordInput"
           id="passwSignupInput"
@@ -38,10 +54,10 @@ const SignUp = () => {
           required
           type="password"
           placeholder="password987!"
-          autocomplete="off"
+          autoComplete="off"
         ></Form.Control>
 
-        <Button variant="primary" type="submit">SignUp</Button>
+        <Button variant="primary" type="submit">Sign Up</Button>
       </Form>
       <Link to="/login">Or login</Link>
     </div>
