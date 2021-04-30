@@ -1,11 +1,23 @@
 import React, { useRef, useState } from 'react';
 import { Popover, Overlay, Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../features/appSlice';
 
 const LoginPopover = () => {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(login({
+      loginData: { email, password }, 
+    }))
+  }
 
   const handleClick = (event) => {
     setShow(prev => !prev);

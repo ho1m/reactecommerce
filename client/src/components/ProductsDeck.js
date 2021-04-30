@@ -7,12 +7,9 @@ const ProductsDeck = ({ products }) => {
 
   return (
     <Row>
-      <ProductCard product={null} />
-      <ProductCard product={null} />
-      <ProductCard product={null} />
-      <ProductCard product={null} />
-      <ProductCard product={null} />
-      <ProductCard product={null} />
+      {products.length ? products.map(product => (
+        <ProductCard product={product} key={product._id} />
+      )) : ''}
     </Row>
   );
 }

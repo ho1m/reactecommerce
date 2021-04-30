@@ -1,17 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Button, Container, Jumbotron } from 'react-bootstrap';
 import { Carousel } from 'react-responsive-carousel';
 import styled from 'styled-components';
+import ecomAxios from '../ecomAxios';
 
 import ProductsDeck from '../components/ProductsDeck';
+import { useDispatch } from 'react-redux';
 
 const Home = () => {
-
+  const dispatch = useDispatch();
+  const [products, setProducts] = useState([]);
   const descShortener = (desc) => desc.substr(0, 200) + '.';
-
-  // get products, action + selector ?
-  // addProduct (product) > addProductToCart({ product });
+  const getProducts = async () => {
+    try {
+      const productsRes = await ecomAxios.get('/products/getall')
+      setProducts(productsRes.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const addProductToCart = (product) => {
+    // addProduct (product) > addProductToCart({ product });
+    // dispatch(addProductToCart(product))
+  }
+  useEffect(() => {
+    getProducts()
+  }, [])
 
   return (
     <HomeContainer className="view">
@@ -25,77 +40,37 @@ const Home = () => {
         emulateTouch={true}
         >
 
-          <div className="h-100">
-            <Jumbotron className="row align-items-center py-4 h-100">
-            <div className="img__container col-12 col-md-4 rounded">
-              <img className="rounded" alt="" src="http://img.bbystatic.com/BestBuy_US/images/products/1018/1018934_sa.jpg" />
+          {products.length ? products.slice(0,3).map(product => (
+            <div className="h-100" key={product._id}>
+              <Jumbotron className="row align-items-center py-4 h-100">
+              <div className="img__container col-12 col-md-4 rounded">
+                <img className="rounded" alt="" src={product.image} />
+              </div>
+              <div className="product__text col-12 col-md-8 text-left">
+                <h2>{product.name}</h2>
+
+                <p className="my-2">
+                  {product.shortDesc}
+                </p>
+
+                <h4 className="mb-3">
+                  {descShortener(product.desc)}
+                </h4>
+
+                <h5>
+                  ${product.price}
+                </h5>
+
+                <Button variant="primary" onClick={() => console.log("add to cart")}>Add To Cart</Button>
+              </div>
+              </Jumbotron>
             </div>
-            <div className="product__text col-12 col-md-8 text-left">
-              <h2>Lorem, ipsum.</h2>
-
-              <p className="my-2">
-                Lorem ipsum dolor sit amet.
-              </p>
-
-              <h4 className="mb-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, quos! Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum tenetur voluptate placeat similique tempore corporis necessitatibus nisi neque cupiditate sunt?
-              </h4>
-
-              <h5>$12.99</h5>
-
-              <Button variant="primary" onClick={() => console.log("add to cart")}>Add To Cart</Button>
-            </div>
-            </Jumbotron>
-          </div>
-          <div className="h-100">
-            <Jumbotron className="row align-items-center py-4 h-100">
-            <div className="img__container col-12 col-md-4 rounded">
-              <img className="rounded" alt="" src="http://img.bbystatic.com/BestBuy_US/images/products/1019/1019306_sa.jpg" />
-            </div>
-            <div className="product__text col-12 col-md-8 text-left">
-              <h2>Lorem, ipsum.</h2>
-
-              <p className="my-2">
-                Lorem ipsum dolor sit amet.
-              </p>
-
-              <h4 className="mb-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, quos!
-              </h4>
-
-              <h5>$12.99</h5>
-
-              <Button variant="primary" onClick={() => console.log("add to cart")}>Add To Cart</Button>
-            </div>
-            </Jumbotron>
-          </div>
-          <div className="h-100">
-            <Jumbotron className="row align-items-center py-4 h-100">
-            <div className="img__container col-12 col-md-4 rounded">
-              <img className="rounded" alt="" src="http://img.bbystatic.com/BestBuy_US/images/products/1018/1018273_rc.jpg" />
-            </div>
-            <div className="product__text col-12 col-md-8 text-left">
-              <h2>Lorem, ipsum.</h2>
-
-              <p className="my-2">
-                Lorem ipsum dolor sit amet.
-              </p>
-
-              <h4 className="mb-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, quos!
-              </h4>
-
-              <h5>$12.99</h5>
-
-              <Button variant="primary" onClick={() => console.log("add to cart")}>Add To Cart</Button>
-            </div>
-            </Jumbotron>
-          </div>
+          )) : ''}
           
         </Carousel>
 
         <h4>All products</h4>
-        <ProductsDeck products={null} />
+        <ProductsDeck products={products} />
       </Container>
     </HomeContainer>
   );

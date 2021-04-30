@@ -1,9 +1,13 @@
 import { Avatar } from '@material-ui/core';
 import React, { useRef, useState } from 'react';
 import { Button, ListGroup, Overlay, Popover } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { logout } from '../../features/appSlice';
 
 const UserPopover = () => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(null);
   const ref = useRef(null);
@@ -39,7 +43,7 @@ const UserPopover = () => {
             <p>user@email.com</p>
           </div>
           <ListGroup className="text-center">
-            <ListGroup.Item to="/orders">
+            <ListGroup.Item as={Link} to="/orders">
               {/* <b-icon icon="cart-check-fill" /> */}
               Orders
             </ ListGroup.Item>
@@ -47,7 +51,7 @@ const UserPopover = () => {
               {/* <b-icon icon="tools" /> */}
               Settings
             </ListGroup.Item>
-            <ListGroup.Item className="bg-secondary text-light font-weight-bold" onClick={() => console.log("signout")}>Sign Out</ListGroup.Item>
+            <ListGroup.Item className="bg-secondary text-light font-weight-bold" onClick={() => dispatch(logout())}>Sign Out</ListGroup.Item>
           </ListGroup>
 
           </Popover.Content>

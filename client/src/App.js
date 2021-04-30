@@ -13,6 +13,8 @@ import Orders from './views/Orders';
 import NotFound from './views/NotFound';
 
 import './App.css';
+import { useSelector } from 'react-redux';
+import { selectUser } from './features/appSlice';
 
 function App() {
   return (
@@ -37,7 +39,7 @@ function App() {
 }
 
 const ProtectedRoute = ({component: Component, ...rest}) => {
-  const user = false;
+  const user = useSelector(selectUser);
 
   return <Route {...rest} render={(props) => {
     if (user) return <Component {...props} />

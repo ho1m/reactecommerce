@@ -5,9 +5,11 @@ import UserPopover from './NavPopovers/UserPopover';
 import LoginPopover from './NavPopovers/LoginPopover';
 import CartPopover from './NavPopovers/CartPopover';
 import { Nav } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../features/appSlice';
 
 const Navbar = () => {
-  const user = true;
+  const user = useSelector(selectUser);
 
   return (
     <div>
