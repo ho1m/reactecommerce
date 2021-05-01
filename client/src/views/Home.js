@@ -7,6 +7,7 @@ import ecomAxios from '../ecomAxios';
 
 import ProductsDeck from '../components/ProductsDeck';
 import { useDispatch } from 'react-redux';
+import { addProductToCart } from '../features/cart/cartSlice';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -19,10 +20,6 @@ const Home = () => {
     } catch (error) {
       console.error(error)
     }
-  }
-  const addProductToCart = (product) => {
-    // addProduct (product) > addProductToCart({ product });
-    // dispatch(addProductToCart(product))
   }
   useEffect(() => {
     getProducts()
@@ -61,7 +58,7 @@ const Home = () => {
                   ${product.price}
                 </h5>
 
-                <Button variant="primary" onClick={() => console.log("add to cart")}>Add To Cart</Button>
+                <Button variant="primary" onClick={() => dispatch(addProductToCart(product))}>Add To Cart</Button>
               </div>
               </Jumbotron>
             </div>

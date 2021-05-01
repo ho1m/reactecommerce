@@ -62,7 +62,7 @@ export const deleteProductFromCart = (productId) => async (dispatch, getState) =
     console.error(error)
   }
 };
-export const addProductToCart = ({ product: { _id, name, desc, shortDesc, image, price, category } }) => async (dispatch, getState) => {
+export const addProductToCart = ({ _id, name, desc, shortDesc, image, price, category }) => async (dispatch, getState) => {
   const currentCartId = selectCurrentCartId(getState());
   const cart = selectCart(getState());
   try {
@@ -105,8 +105,8 @@ export const cartCheckedOut = () => async (dispatch, getState) => {
     if (!currentCartId) return
     await ecomAxios.patch(`/carts/checkedout/${currentCartId}`)
     if (user) {
-      dispatch('updateUserCurrentCart', { cartId: '' })
-      dispatch('getCheckedoutCarts')
+      dispatch(updateUserCurrentCart(''))
+      dispatch(getCheckedoutCarts())
     }
     dispatch(removeCart())
     dispatch(removeCurrentCartId())

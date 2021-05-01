@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import ecomAxios from '../ecomAxios';
+import { addProductToCart } from '../features/cart/cartSlice';
 
 const ProductPage = () => {
+  const dispatch = useDispatch();
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   
@@ -47,7 +50,7 @@ const ProductPage = () => {
         <Button
         variant="primary"
         className="mt-3"
-        onClick={() => console.log("add product")}
+        onClick={() => dispatch(addProductToCart(product))}
         >Add To Cart</Button>
       </div>
 
