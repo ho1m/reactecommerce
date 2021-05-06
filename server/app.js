@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 
 // routers
+const adminRouter = require('./routers/admins/adminRouter');
 const usersRouter = require('./routers/users/usersRouter');
 const cartsRouter = require('./routers/carts/cartsRouter');
 const productsRouter = require('./routers/products/productsRouter');
@@ -15,6 +16,7 @@ const app = express();
 // middleware
 app.use(cors(), morgan('dev'), helmet(), express.json());
 
+app.use('/admin', adminRouter);
 app.use('/users', usersRouter);
 app.use('/carts', cartsRouter);
 app.use('/products', productsRouter);

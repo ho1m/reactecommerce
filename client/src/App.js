@@ -16,24 +16,44 @@ import './App.css';
 import { useSelector } from 'react-redux';
 import { selectUser } from './features/appSlice';
 
+import AdminAuth from './views/admin/AdminAuth';
+import AdminDashboard from './views/admin/AdminDashboard';
+import AdminNavbar from './components/admin/AdminNavbar';
+
 function App() {
+  const admin = true;
+
   return (
     <div className="app">
-      <Router>
-        <Navbar />
+      {admin ? (
+        <Router>
+          <AdminNavbar />
 
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/checkout/success/:cartId" exact component={Checkout} />
-          <Route path="/productpage/view/:productId" exact component={ProductPage} />
-          <Route path="/login" exact component={Login} />
-          <Route path="/signup" exact component={SignUp} />
-          <ProtectedRoute path="/orders" exact component={Orders} />
-          <Route path="*" component={NotFound} />
-        </Switch>
+          <Switch>
+            <Route path="/" exact component={AdminDashboard} />
+            <Route path="*" component={NotFound} />
+          </Switch>
 
-        <Footer />
-      </Router>
+        </Router>
+      ) : 
+      (
+        <Router>
+          <Navbar />
+
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/checkout/success/:cartId" exact component={Checkout} />
+            <Route path="/productpage/view/:productId" exact component={ProductPage} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/signup" exact component={SignUp} />
+            <Route path="/admin/auth" exact component={AdminAuth} />
+            <ProtectedRoute path="/orders" exact component={Orders} />
+            <Route path="*" component={NotFound} />
+          </Switch>
+
+          <Footer />
+        </Router>
+      )}
     </div>
   );
 }

@@ -1,15 +1,20 @@
 import { Avatar } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Accordion, Button, Card, Container, ListGroup } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../features/appSlice';
-import { selectNameTest, selectOrders } from '../features/cart/cartSlice';
+import { getCheckedoutCarts, selectNameTest, selectOrders } from '../features/cart/cartSlice';
 
 const Orders = () => {
+  const dispatch = useDispatch();
   const orders = useSelector(selectOrders);
   const totalPrice = (productsList) => {
     return productsList.map(({ product, quantity }) => product.price * quantity).reduce((a, b) => a + b, 0)
   }
+
+  useEffect(() => {
+    dispatch(getCheckedoutCarts())
+  }, [])
 
   return (
     <div className="view">
@@ -18,12 +23,12 @@ const Orders = () => {
       
         <Accordion>
 
-          {orders.length ? orders.map((order, i) => (
+          {orders.length ? [...orders].reverse().map((order, i) => (
             <Card className="mb-1" key={order._id}>
 
               <Card.Header header-tag="header" className="p-1" role="tab">
                 <Accordion.Toggle as={Button} variant="link" eventKey={`${i}`} className="w-100 bg-dark text-light">
-                  ORDER #{order._id} • {new Date(order.updatedAt).toDateString()} • TOTAL PRICE: ${totalPrice(order.products)}
+                  ORDER: #{order._id} • {new Date(order.updatedAt).toDateString()} • TOTAL PRICE: ${totalPrice(order.products)} • ORDER STATUS: {order.status}
                 </Accordion.Toggle>
               </Card.Header>
 
