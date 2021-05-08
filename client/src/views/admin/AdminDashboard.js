@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import ecomAxios from '../../ecomAxios';
-import { orderStatusChange, selectToken } from '../../features/admin/adminSlice';
+import { orderStatusChange, selectToken, updateUser } from '../../features/admin/adminSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 const AdminDashboard = () => {
@@ -47,21 +47,19 @@ const AdminDashboard = () => {
     }
   }
 
-  const updateOrder = (e) => {
+  const updateOrderSubmit = (e) => {
     e.preventDefault();
     dispatch(orderStatusChange({ orderId, status }))
   }
 
-  const updateUser = (e) => {
+  const updateUserSubmit = (e) => {
     e.preventDefault();
-    dispatch(orderStatusChange({ 
+    dispatch(updateUser({ 
       userId, userData: {
         name, email
       } 
     }))
   }
-
-  useEffect(() => { console.log('User: ', user, 'Order: ', order, status) }, [user, order, status])
 
   return (
     <div className="view">
@@ -78,7 +76,7 @@ const AdminDashboard = () => {
             </Button>
           </Form>
           {user && (
-            <Form onSubmit={updateUser} className="bg-secondary p-2 rounded mt-3">
+            <Form onSubmit={updateUserSubmit} className="bg-secondary p-2 rounded mt-3">
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>Name: </Form.Label>
                 <Form.Control type="text" className="w-75" placeholder="User email..." onChange={({target}) => setName(target.value)} value={name}  />
@@ -108,7 +106,7 @@ const AdminDashboard = () => {
             </Button>
           </Form>
           {order && (
-            <Form onSubmit={updateOrder} className="bg-secondary p-2 rounded mt-3">
+            <Form onSubmit={updateOrderSubmit} className="bg-secondary p-2 rounded mt-3">
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>Status: </Form.Label>
                 <Form.Control as="select" value={status} onChange={({target}) => setStatus(target.value)}>

@@ -52,7 +52,7 @@ export const adminRegister = (registerData) => async (dispatch, getState) => {
 export const orderStatusChange = ({ orderId, status }) => async (dispatch, getState) => {
   const token = selectToken(getState());
   try {
-    await ecomAxios.patch(`/admins/order/:${orderId}/status`, { status }, {
+    await ecomAxios.patch(`/admins/order/${orderId}/status`, { status }, {
       headers: {
         authorization: `Bearer ${token}`
       }
