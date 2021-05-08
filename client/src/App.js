@@ -19,9 +19,10 @@ import { selectUser } from './features/appSlice';
 import AdminAuth from './views/admin/AdminAuth';
 import AdminDashboard from './views/admin/AdminDashboard';
 import AdminNavbar from './components/admin/AdminNavbar';
+import { selectAdmin } from './features/admin/adminSlice';
 
 function App() {
-  const admin = true;
+  const admin = useSelector(selectAdmin);
 
   return (
     <div className="app">
@@ -30,8 +31,7 @@ function App() {
           <AdminNavbar />
 
           <Switch>
-            <Route path="/" exact component={AdminDashboard} />
-            <Route path="*" component={NotFound} />
+            <Route path="/admin" exact component={AdminDashboard} />
           </Switch>
 
         </Router>

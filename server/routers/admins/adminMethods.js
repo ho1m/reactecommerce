@@ -6,6 +6,7 @@ const auth = require('../../authentication/auth');
 
 module.exports = {
   registerAdmin (req, res) {
+    console.log(req.body)
     Admin.exists({ email: req.body.email }, (err, exists) => {
       if (err) return res.status(401).json(err);
       if (exists) {
@@ -17,7 +18,6 @@ module.exports = {
         Admin.create({
           email: req.body.email,
           passwordHash: hash,
-          name: req.body.name
         })
           .then(() => res.status(201).json({
             message: 'Admin has been created successfully!'
@@ -33,12 +33,11 @@ module.exports = {
         const match = bcrypt.compareSync(req.body.password, admin.passwordHash);
         if (match) {
           res.status(200).json({
-            user: {
+            admin: {
               _id: admin._id,
               email: admin.email,
               name: admin.name,
             },
-            currentCart: admin.current_cart,
             token: auth.generateToken(admin._id, 'admin')
           })
         } else {

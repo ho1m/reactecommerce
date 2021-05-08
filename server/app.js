@@ -16,7 +16,7 @@ const app = express();
 // middleware
 app.use(cors(), morgan('dev'), helmet(), express.json());
 
-app.use('/admin', adminRouter);
+app.use('/admins', adminRouter);
 app.use('/users', usersRouter);
 app.use('/carts', cartsRouter);
 app.use('/products', productsRouter);

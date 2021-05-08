@@ -3,6 +3,12 @@ const bcrypt = require('bcrypt');
 const auth = require('../../authentication/auth');
 
 module.exports = {
+  getUser (req, res) {
+    User.findOne({ _id: req.params.userId })
+      .then(data => res.status(200).json(data))
+      .catch(err => res.status(500).json(err))
+  },
+
   registerUser (req, res) {
     User.exists({ email: req.body.email }, (err, exists) => {
       if (err) return res.status(401).json(err);
