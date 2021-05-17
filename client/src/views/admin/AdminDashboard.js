@@ -50,6 +50,7 @@ const AdminDashboard = () => {
   const updateOrderSubmit = (e) => {
     e.preventDefault();
     dispatch(orderStatusChange({ orderId, status }))
+    setOrder(null)
   }
 
   const updateUserSubmit = (e) => {
@@ -59,6 +60,7 @@ const AdminDashboard = () => {
         name, email
       } 
     }))
+    setUser(null)
   }
 
   return (

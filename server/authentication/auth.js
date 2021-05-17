@@ -9,7 +9,6 @@ module.exports = {
   },
 
   verifyToken (req, res, next) {
-    console.log(req.headers.authorization)
     try {
       const token = req.headers.authorization.split(' ')[1];
       jwt.verify(token, key)
@@ -23,10 +22,17 @@ module.exports = {
   },
 
   verifyAdmin (req, res, next) {
-    console.log("hello");
-    const token = req.headers.authorization.split(' ')[1];
-    const ting = jwt.decode(token, key)
-    console.log(ting, "*****")
-    next()
+    try {
+      const token = req.headers.authorization.split(' ')[1];
+      const { role } = jwt.decode(token, key)
+      if (role === 'admin') {
+        next()
+      }
+    } catch (error) {
+      res.status(409).json({
+        ...error,
+        message: 'Unauthorized'
+      });
+    }
   }
 };
