@@ -17,10 +17,10 @@ const AdminAuth = () => {
     if (selected === 'Login') {
       dispatch(adminLogin({
         loginData: { email, password }, 
-        historyMethod: history.push('/admin')
+        historyMethod: () => history.push('/admin')
       }))
     } else {
-      dispatch(adminRegister({ email, password }))
+      dispatch(adminRegister({ email, password, setMethod: () => setSelected('Login') }))
     }
   }
 

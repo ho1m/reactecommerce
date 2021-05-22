@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const cartsMethods = require('./cartsMethods');
-const { verifyToken } = require('../../authentication/auth');
+const { verifyToken, verifyAdmin } = require('../../authentication/auth');
+
+// här får vi alla carts (orders) som är checked_out av alla användare
+router.get('/checkedout', verifyAdmin, cartsMethods.getAllOrders);
 
 // här får vi alla carts som har checked_out = true av en användare
 router.get('/checkedout/:userId', verifyToken, cartsMethods.getOrders);

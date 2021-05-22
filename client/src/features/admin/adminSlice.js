@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import ecomAxios from '../../ecomAxios';
 
 const initialState = {
@@ -35,21 +35,24 @@ export const adminLogin = ({loginData, historyMethod}) => async (dispatch, getSt
     const loginRes = await ecomAxios.post('/admins/login', loginData)
     const { admin, token } = loginRes.data
 
-    dispatch(setAdmin(admin))
-    dispatch(setToken(token))
+    if (loginRes.statusText === 'OK') {
+      historyMethod()
+      dispatch(setAdmin(admin))
+      dispatch(setToken(token))
+    }
   } catch (error) {
-    console.error(error)
+    alert(error)
   }
 };
-export const adminRegister = (registerData) => async (dispatch, getState) => {
+export const adminRegister = ({ email, password, setMethod}) => async (dispatch, getState) => {
   try {
-    console.log(registerData)
-    await ecomAxios.post('/admins/register', registerData);
+    const res = await ecomAxios.post('/admins/register', { email, password });
+    if (res.status === 201) setMethod()
   } catch (error) {
-    console.error(error)
+    alert(error)
   }
 };
-export const orderStatusChange = ({ orderId, status }) => async (dispatch, getState) => {
+export const orderStatusChange = ({ orderId, status, loadMethod }) => async (dispatch, getState) => {
   const token = selectToken(getState());
   try {
     await ecomAxios.patch(`/admins/order/${orderId}/status`, { status }, {
@@ -58,8 +61,9 @@ export const orderStatusChange = ({ orderId, status }) => async (dispatch, getSt
       }
     });
   } catch (error) {
-    console.error(error)
+    console.error(error.message)
   }
+  loadMethod()
 };
 export const updateUser = ({ userId, userData }) => async (dispatch, getState) => {
   const token = selectToken(getState());

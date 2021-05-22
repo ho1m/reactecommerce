@@ -14,8 +14,8 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(register({
-      registerData: { email, password, name },
-      historyMethod: history.push('/') 
+      registerData: { email: email.toLowerCase(), password, name },
+      historyMethod: () => history.push('/login') 
     }))
   }
 
@@ -33,6 +33,8 @@ const SignUp = () => {
           type="text"
           placeholder="Jane Doe"
           autoComplete="off"
+          value={name}
+          onChange={({target}) => setName(target.value)}
         ></Form.Control>
 
         <Form.Label className="" htmlFor="emailSignupInput">Email:</Form.Label>
@@ -44,6 +46,8 @@ const SignUp = () => {
           type="email"
           placeholder="example@gmail.com"
           autoComplete="off"
+          value={email}
+          onChange={({target}) => setEmail(target.value)}
         ></Form.Control>
 
         <Form.Label className="" htmlFor="passwSignupInput">Password:</Form.Label>
@@ -55,6 +59,8 @@ const SignUp = () => {
           type="password"
           placeholder="password987!"
           autoComplete="off"
+          value={password}
+          onChange={({target}) => setPassword(target.value)}
         ></Form.Control>
 
         <Button variant="primary" type="submit">Sign Up</Button>

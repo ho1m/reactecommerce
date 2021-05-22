@@ -25,8 +25,8 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    getOrder();
-  }, [cartId]);
+    getOrder(); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartId]); 
 
   useEffect(() => {console.log(order)}, [order])
 

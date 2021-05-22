@@ -2,8 +2,7 @@ import { Avatar } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { Accordion, Button, Card, Container, ListGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../features/appSlice';
-import { getCheckedoutCarts, selectNameTest, selectOrders } from '../features/cart/cartSlice';
+import { getCheckedoutCarts, selectOrders } from '../features/cart/cartSlice';
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -13,7 +12,7 @@ const Orders = () => {
   }
 
   useEffect(() => {
-    dispatch(getCheckedoutCarts())
+    dispatch(getCheckedoutCarts()) // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

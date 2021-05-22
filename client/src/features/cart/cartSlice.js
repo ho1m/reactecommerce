@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { removeCurrentCartId, selectCurrentCartId, selectToken, selectUser, setCurrentCartId, updateUserCurrentCart } from '../appSlice';
 import ecomAxios from '../../ecomAxios';
 
@@ -30,7 +30,9 @@ export const selectOrders = (state) => state.cart.orders;
 
 export const getCart = () => async (dispatch, getState) => {
   const currentCartId = selectCurrentCartId(getState());
-  if (!currentCartId) return;
+  if (!currentCartId) {
+    return dispatch(setCart(null)); // <<<<<
+  }
   try {
     const cartRes = await ecomAxios.get(`/carts/one/${currentCartId}`)
     dispatch(setCart(cartRes.data))

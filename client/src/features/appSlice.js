@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { getCart, getCheckedoutCarts, removeCart, removeOrders } from './cart/cartSlice';
 import ecomAxios from '../ecomAxios';
 
@@ -53,7 +53,7 @@ export const login = ({loginData, historyMethod}) => async (dispatch, getState) 
     dispatch(setCurrentCartId(currentCart))
     dispatch(getCart())
     dispatch(getCheckedoutCarts())
-    historyMethod()
+    if (historyMethod) historyMethod()
   } catch (error) {
     console.error(error)
   }
